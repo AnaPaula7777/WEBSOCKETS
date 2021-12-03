@@ -10,7 +10,16 @@ export async function saveMsg(str) {
         let data = await fs.promises.readFile(__dirname+'/files/messages.txt', 'utf-8');
         console.log('esto resulta de leer', data);
         let dataObj = JSON.parse(data);
-        dataObj.push(str);
+        let horario = new Date();
+        horario.toLocaleDateString();
+
+        let objNew = {
+            user: str.user,
+            message: str.message,
+            date: horario
+        }
+
+        dataObj.push(objNew);
             try{
                 await fs.promises.writeFile(__dirname+'/files/messages.txt', JSON.stringify(dataObj, null, 2));
                 return {status: "success", message: "El mensaje se añadio con exito", data: dataObj}
@@ -19,12 +28,19 @@ export async function saveMsg(str) {
             }
         
     } catch(err){
+        let horario = new Date();
+        horario.toLocaleDateString();
+
+        let objNew = {
+            user: str.user,
+            message: str.message,
+            date: horario
+        }
         try {
-            console.log('va directo al catch');
-            await fs.promises.writeFile(__dirname+'/files/messages.txt', JSON.stringify([str], null, 2));
+            await fs.promises.writeFile(__dirname+'/files/messages.txt', JSON.stringify([objNew], null, 2));
             return {status:"success", message: "El mensaje se añadio con exito"};
         } catch(err) {
-            return {status: "error", message: `No se pudo añadir el mensaje a carpeta inexistente: ${__dirname}/files/messages.txt`, err}
+            return {status: "error", message: `No se pudo añadir el mensaje a carpeta inexistente: `, err}
         }
 }
 }

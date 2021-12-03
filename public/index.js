@@ -17,7 +17,6 @@ let input = document.getElementById('mensaje');
 let sendButton = document.getElementById('enviar');
 let user = document.getElementById('email');
 sendButton.addEventListener('click', (e)=>{
-    console.log('haz hecho click en Enviar');
     socket.emit('message', {user: user.value, message: input.value});
 });
 
@@ -26,13 +25,9 @@ socket.on('welcome', data=>{
 });
 
 socket.on('messagelog', data=>{
-    console.log('esto es data',data);
-});
-
-socket.on('messagelog', data=>{
     let p = document.getElementById('log');
     let mensajes = data.map(message=>{
-        return `<div><span class="user">${message.user} <span class="message">${message.message}</span></span></div>`
+        return `<div><span class="user">${message.user} <span class="date">[${message.date}]</span> <span class="message">${message.message}</span></span></div>`
     }).join('');
     p.innerHTML= mensajes;
 })
