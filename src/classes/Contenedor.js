@@ -24,7 +24,7 @@ class Contenedor{
                     await fs.promises.writeFile(this.archivo, JSON.stringify(dataObj, null, 2));
                     return {status: "success", message: "El objeto se añadio con exito", id: objNew.id}
                 } catch(err) {
-                    return {status: "error", message: "No se pudo añadir el objeto: ", err};
+                    return {status: "errodedr", message: "No se pudo añadir el objeto: ", err};
                 }
             }
             
